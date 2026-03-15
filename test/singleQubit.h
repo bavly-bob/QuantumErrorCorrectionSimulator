@@ -1,5 +1,5 @@
 #pragma once 
-#include "qubit.h"
+#include "quantumState.h"
 #include "quantumGate.h"
 #include <vector>
 #include <complex>
@@ -10,10 +10,9 @@ bool test_single_qubit()
     //test double application of Hadamard gate on |0> should return to |0>
     for(int i = 0; i < 1000; ++i)
     {
-        qubit q({1,0},{0,0});   // |0>
-        hadamardGate g;
-        g.apply(q);              // H|0> = (|0> + |1>)/sqrt(2)
-        g.apply(q);              // H((|0> + |1>)/sqrt(2)) = |0> should return to |0>
+        QuantumState q(1);
+        q.applyGate(hadamard(), 0);              // H|0> = (|0> + |1>)/sqrt(2)
+        q.applyGate(hadamard(), 0);              // H((|0> + |1>)/sqrt(2)) = |0> should return to |0>
         int result = q.measure();
         if(result != 0)
             return false; // Test failed
@@ -23,9 +22,8 @@ bool test_single_qubit()
     int count0 = 0, count1 = 0;
     for(int i = 0; i < 10000; ++i)
     {
-        qubit q({1,0},{0,0});   // |0>
-        hadamardGate g;
-        g.apply(q);              // H|0> = (|0> + |1>)/sqrt(2)
+        QuantumState q(1);
+        q.applyGate(hadamard(), 0);              // H|0> = (|0> + |1>)/sqrt(2)
         int result = q.measure();
         if(result == 0)
             count0++;
@@ -34,7 +32,7 @@ bool test_single_qubit()
     }
 
     // Check if the counts are approximately 50% each
-    if(count0 < 4500 || count0 > 5500)
+    if(count0 < 4700 || count0 > 5300)
         return false;
 
     return true;

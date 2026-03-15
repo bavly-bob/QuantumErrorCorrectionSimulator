@@ -7,8 +7,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 add_executable(${target} 
     main.cpp 
-    src/qubit.cpp 
+    src/quantumState.cpp 
     src/quantumGate.cpp
+    src/qubit.cpp
 )
 
 target_include_directories(${target} PRIVATE 

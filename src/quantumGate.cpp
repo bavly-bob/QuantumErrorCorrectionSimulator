@@ -1,28 +1,43 @@
 #include "quantumGate.h"
 #include <cmath>
 
-const double sqrt2_inv = 1.0 / sqrt(2.0);
-
-void hadamardGate::apply(qubit &q) {
-    complex<double> newAlpha = (q.getAlpha() + q.getBeta()) * sqrt2_inv;
-    complex<double> newBeta = (q.getAlpha() - q.getBeta()) * sqrt2_inv;
-    q = qubit(newAlpha, newBeta);
+Gate pauliX()
+{
+    Gate g;
+    g.m[0][0] = 0;
+    g.m[0][1] = 1;
+    g.m[1][0] = 1;
+    g.m[1][1] = 0;
+    return g;
 }
 
-void pauliXGate::apply(qubit &q) {
-    complex<double> newAlpha = q.getBeta();
-    complex<double> newBeta = q.getAlpha();
-    q = qubit(newAlpha, newBeta);
+Gate pauliZ()
+{
+    Gate g;
+    g.m[0][0] = 1;
+    g.m[0][1] = 0;
+    g.m[1][0] = 0;
+    g.m[1][1] = -1;
+    return g;
 }
 
-void pauliYGate::apply(qubit &q) {
-    complex<double> newAlpha = -1i * q.getBeta();
-    complex<double> newBeta = 1i * q.getAlpha();
-    q = qubit(newAlpha, newBeta);
+Gate pauliY()
+{
+    Gate g;
+    g.m[0][0] = 0;
+    g.m[0][1] = std::complex<double>(0, -1);
+    g.m[1][0] = std::complex<double>(0, 1);
+    g.m[1][1] = 0;
+    return g;
 }
 
-void pauliZGate::apply(qubit &q) {
-    complex<double> newAlpha = q.getAlpha();
-    complex<double> newBeta = -q.getBeta();
-    q = qubit(newAlpha, newBeta);
+Gate hadamard()
+{
+    Gate g;
+    double s = 1.0 / std::sqrt(2);
+    g.m[0][0] = s;
+    g.m[0][1] = s;
+    g.m[1][0] = s;
+    g.m[1][1] = -s;
+    return g;
 }

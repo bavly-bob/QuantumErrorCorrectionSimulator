@@ -1,6 +1,6 @@
 #include <iostream>
 #include <cassert>
-#include "qubit.h"
+#include "quantumState.h"
 #include "quantumGate.h"
 #include "singleQubit.h"
 
@@ -10,11 +10,9 @@ int main()
 {
     assert(test_single_qubit());
     cout << "All tests passed!\n";
-    
-    qubit q({1,0},{0,0});   // |0>
-    hadamardGate g;
-    g.apply(q);              // H|0> = (|0> + |1>)/sqrt(2)
-    g.apply(q);              // H((|0> + |1>)/sqrt(2)) = |0> should return to |0>
+
+    QuantumState q(1);
+    q.applyGate(hadamard(), 0);              // H|0> = (|0> + |1>)/sqrt(2)
 
     int result = q.measure();
 

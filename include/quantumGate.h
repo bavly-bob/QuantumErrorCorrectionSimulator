@@ -1,32 +1,13 @@
 #pragma once
-#include "qubit.h"
+#include <complex>
 
-class gate
+struct Gate
 {
-public:
-    virtual void apply(qubit &q) = 0;
+    std::complex<double> m[2][2];
 };
 
-class hadamardGate : public gate
-{
-public:
-    void apply(qubit &q) override;
-};
-
-class pauliXGate : public gate
-{
-public:
-    void apply(qubit &q) override;
-};
-
-class pauliYGate : public gate
-{
-public:
-    void apply(qubit &q);
-};
-
-class pauliZGate : public gate
-{
-public:
-    void apply(qubit &q) override;
-};
+Gate hadamard();
+Gate pauliX();
+Gate pauliY();
+Gate pauliZ();
+Gate cnot();
