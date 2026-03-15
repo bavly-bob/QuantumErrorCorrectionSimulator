@@ -1,0 +1,8 @@
+#noise dir
+.vscode/
+
+#build dir
+build/
+
+#unnessary files
+*.exe
