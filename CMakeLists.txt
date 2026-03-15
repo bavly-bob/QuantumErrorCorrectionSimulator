@@ -10,6 +10,8 @@ add_executable(${target}
     src/quantumState.cpp 
     src/quantumGate.cpp
     src/qubit.cpp
+    src/circuit.cpp
+    src/simulator.cpp
 )
 
 target_include_directories(${target} PRIVATE 

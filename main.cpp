@@ -1,20 +1,22 @@
 #include <iostream>
-#include <cassert>
 #include "quantumState.h"
 #include "quantumGate.h"
 #include "singleQubit.h"
+#include "multiQubits.h"
 
+#include <iostream>
+#include <cassert>
 using namespace std;
 
 int main()
 {
     assert(test_single_qubit());
-    cout << "All tests passed!\n";
-
-    QuantumState q(1);
-    q.applyGate(hadamard(), 0);              // H|0> = (|0> + |1>)/sqrt(2)
-
-    int result = q.measure();
-
-    cout << result << '\n';
+    assert(test_two_qubits_bell_state());
+    assert(test_three_qubits_GHZ_state());
+    assert(test_two_qubits_double_hadamard());
+    assert(test_two_qubits_double_cnot());
+    assert(test_two_qubits_single_hadamard());
+    
+    cout << "All tests passed!" << endl;
+    return 0;
 }

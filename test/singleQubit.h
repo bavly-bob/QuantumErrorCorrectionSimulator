@@ -1,6 +1,8 @@
 #pragma once 
 #include "quantumState.h"
 #include "quantumGate.h"
+#include "circuit.h"
+#include "simulator.h"
 #include <vector>
 #include <complex>
 using namespace std;
@@ -10,10 +12,12 @@ bool test_single_qubit()
     //test double application of Hadamard gate on |0> should return to |0>
     for(int i = 0; i < 1000; ++i)
     {
-        QuantumState q(1);
-        q.applyGate(hadamard(), 0);              // H|0> = (|0> + |1>)/sqrt(2)
-        q.applyGate(hadamard(), 0);              // H((|0> + |1>)/sqrt(2)) = |0> should return to |0>
-        int result = q.measure();
+        QuantumCircuit qc();
+        qc.h(0);              // H|0> = (|0> + |1>)/sqrt(2)
+        qc.h(0);              // H((|0> + |1>)/sqrt(2)) = |0> should return to |0>
+        Simulator sim(1);
+        sim.run(qc);
+        int result = sim.measure();
         if(result != 0)
             return false; // Test failed
     }
@@ -22,9 +26,11 @@ bool test_single_qubit()
     int count0 = 0, count1 = 0;
     for(int i = 0; i < 10000; ++i)
     {
-        QuantumState q(1);
-        q.applyGate(hadamard(), 0);              // H|0> = (|0> + |1>)/sqrt(2)
-        int result = q.measure();
+        QuantumCircuit qc();
+        qc.h(0);              // H|0> = (|0> + |1>)/sqrt(2)
+        Simulator sim(1);
+        sim.run(qc);
+        int result = sim.measure();
         if(result == 0)
             count0++;
         else

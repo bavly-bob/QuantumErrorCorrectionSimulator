@@ -7,10 +7,6 @@ using namespace std;
 
 class QuantumState {
 
-private:
-    int numQubits;
-    vector<complex<double>> amplitudes;
-
 public:
 
     QuantumState(int n);
@@ -21,4 +17,9 @@ public:
     void applyCNOT(int control, int target);
     void normalize();
     int measure();
+
+private:
+    int numQubits;
+    vector<complex<double>> amplitudes;
+
 };

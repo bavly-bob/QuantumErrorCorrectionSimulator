@@ -51,21 +51,25 @@ void QuantumState::normalize()
     }
 }
 
-void QuantumState::applyGate(const Gate &gate, int target)
+void QuantumState::applyGate(const Gate& gate, int target)
 {
     int dim = 1 << numQubits;
 
-    for (int i = 0; i < dim; i++)
+    int stride = 1 << target;
+    int step = stride * 2;
+
+    for (int base = 0; base < dim; base += step)
     {
-        if (((i >> target) & 1) == 0)
+        for (int offset = 0; offset < stride; offset++)
         {
-            int j = i | (1 << target);
+            int i = base + offset;
+            int j = i + stride;
 
-            auto a = getAmplitude(i);
-            auto b = getAmplitude(j);
+            auto a = amplitudes[i];
+            auto b = amplitudes[j];
 
-            setAmplitude(i, gate.m[0][0] * a + gate.m[0][1] * b);
-            setAmplitude(j, gate.m[1][0] * a + gate.m[1][1] * b);
+            amplitudes[i] = gate.at(0,0) * a + gate.at(0,1) * b;
+            amplitudes[j] = gate.at(1,0) * a + gate.at(1,1) * b;
         }
     }
 }
@@ -76,12 +80,10 @@ void QuantumState::applyCNOT(int control, int target)
 
     for (int i = 0; i < dim; i++)
     {
-        if (((i >> control) & 1) == 1)
-        {
-            int j = i ^ (1 << target);
+        // Skip unless control=1, target=0
+        if (!((i >> control) & 1) || ((i >> target) & 1))
+            continue;
 
-            if (i < j)
-                std::swap(amplitudes[i], amplitudes[j]);
-        }
+        std::swap(amplitudes[i], amplitudes[i ^ (1 << target)]);
     }
 }
