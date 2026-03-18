@@ -3,6 +3,7 @@
 #include <random>
 #include <complex>
 #include <algorithm>
+using namespace std;
 
 QuantumState::QuantumState(int n)
 {

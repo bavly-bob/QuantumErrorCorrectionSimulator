@@ -3,9 +3,6 @@
 #include <complex>
 #include "quantumGate.h"
 
-using namespace std;
-
-
 struct SyndromeProb {
     double p00 = 0;
     double p10 = 0;
@@ -17,8 +14,8 @@ class QuantumState {
 public:
     QuantumState(int n);
     int size() const { return static_cast<int>(amplitudes.size()); }
-    complex<double> getAmplitude(int i) const { return amplitudes[i]; }
-    void setAmplitude(int i, complex<double> val) { amplitudes[i] = val; }
+    std::complex<double> getAmplitude(int i) const { return amplitudes[i]; }
+    void setAmplitude(int i, std::complex<double> val) { amplitudes[i] = val; }
     void applyGate(const Gate &gate, int target);
     void applyCNOT(int control, int target);
     void applyBitFlipNoise(double prob);
@@ -28,7 +25,7 @@ public:
     int measure();
     void collapseLogical(int logicalQubit, int value);
     SyndromeProb computeSyndromeProb(int logicalQubit);
-    pair<int, int> sampleSyndrome(const SyndromeProb& sample);
+    std::pair<int, int> sampleSyndrome(const SyndromeProb& sample);
     void collapseToSyndrome(int logicalQubit, int S1, int S2);
     void correctBitFlip(int logicalQubit);
     void correctPhaseFlip(int logicalQubit);
@@ -36,5 +33,5 @@ public:
 
 private:
     int numQubits;
-    vector<complex<double>> amplitudes;
+    std::vector<std::complex<double>> amplitudes;
 };
