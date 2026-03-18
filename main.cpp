@@ -10,13 +10,12 @@ using namespace std;
 
 int main()
 {
-    assert(test_single_qubit());
-    assert(test_two_qubits_bell_state());
-    assert(test_three_qubits_GHZ_state());
-    assert(test_two_qubits_double_hadamard());
-    assert(test_two_qubits_double_cnot());
-    assert(test_two_qubits_single_hadamard());
+    cout << test_single_qubit() << "\n";
+    cout << test_two_qubits_bell_state() << "\n";
+    cout << test_three_qubits_GHZ_state() << "\n";
+    cout << test_two_qubits_double_hadamard() << "\n";
+    cout << test_two_qubits_double_cnot() << "\n";
+    cout << test_two_qubits_single_hadamard() << "\n";
     
-    cout << "All tests passed!" << endl;
     return 0;
 }

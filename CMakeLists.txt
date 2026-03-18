@@ -12,6 +12,7 @@ add_executable(${target}
     src/qubit.cpp
     src/circuit.cpp
     src/simulator.cpp
+    src/noise.cpp
 )
 
 target_include_directories(${target} PRIVATE 

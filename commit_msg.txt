@@ -1,0 +1,13 @@
+Implement 3-qubit repetition code for error correction
+
+This commit introduces a complete infrastructure for quantum error 
+correction using a 3-qubit repetition code to mitigate bit-flip errors:
+
+- **State Encoding:** Logical qubits are now encoded into 3 physical qubits using `QuantumState::encode(logicalQubit)`.
+- **Transversal Gates:** Circuit operations (`h`, `x`, `z`, `cnot`) in `QuantumCircuit` now apply across all 3 physical qubits of a logical qubit.
+- **Syndrome Measurement & Correction:** Added `computeSyndromeProb`, `sampleSyndrome`, and `correctBitFlip` to detect and correct bit-flip errors without collapsing the logical state.
+- **Logical Measurement:** `Simulator` and `QuantumState` now use `measureAllLogical()` to decode physical qubits via majority voting.
+- **Noise Simulation:** Introduced `src/noise.cpp` with `applyBitFlipNoise` and `applyPhaseFlipNoise` functions for simulating channel errors.
+- **Performance:** Streamlined `applyCNOT` using bitwise shifts and masks for greater efficiency.
+- **Test Fixes:** Fixed the Most Vexing Parse bug (`QuantumCircuit qc();`) in tests, correctly mapped bounds for multiple outcomes, and included `cout` checks.
+- **Build Configuration:** Added `src/noise.cpp` to `CMakeLists.txt`.

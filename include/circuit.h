@@ -8,7 +8,8 @@ enum class OpType
     X,
     Z,
     CNOT,
-    MEASURE
+    MEASURE_LOGICAL,
+    MEASURE_ANCILLA,
 };
 
 struct Operation
@@ -27,7 +28,12 @@ public:
     void cnot(int control, int target);
     void measure(int q);
     const std::vector<Operation>& getOperations() const;
-    QuantumCircuit();
+    QuantumCircuit() = default;
+    QuantumCircuit(const QuantumCircuit& other) = default;
+    QuantumCircuit(QuantumCircuit&& other) = default;
+    QuantumCircuit& operator=(const QuantumCircuit& other) = default;
+    QuantumCircuit& operator=(QuantumCircuit&& other) = default;
+    ~QuantumCircuit() = default;
 private:
     std::vector<Operation> ops;
 };

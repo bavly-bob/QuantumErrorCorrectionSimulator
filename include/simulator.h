@@ -7,8 +7,10 @@ class Simulator
 {
 public:
     Simulator(int qubits);
-    void run(const QuantumCircuit& circuit);
+    void run(QuantumCircuit& circuit);
     int measure();
+    int measureAllLogical();
 private:
+    int logicalQubits;
     QuantumState state;
 };

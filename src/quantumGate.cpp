@@ -2,9 +2,7 @@
 #include <cmath>
 
 Gate::Gate(std::complex<double> a, std::complex<double> b, std::complex<double> c, std::complex<double> d)
-{
-    m = {{a, b}, {c, d}};
-}
+    : m{{ {{a, b}}, {{c, d}} }} {}
 
 Gate Gate::hadamard()
 {

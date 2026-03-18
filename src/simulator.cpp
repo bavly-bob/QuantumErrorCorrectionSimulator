@@ -4,11 +4,13 @@
 #include "circuit.h"
 
 Simulator::Simulator(int qubits)
-    : state(qubits)
+    : logicalQubits(qubits) , state(qubits)
 {
+    for (int i = 0; i < qubits; i++)
+        state.encode(i);
 }
 
-void Simulator::run(const QuantumCircuit& circuit)
+void Simulator::run(QuantumCircuit& circuit)
 {
     for (const auto& op : circuit.getOperations())
     {
@@ -30,14 +32,24 @@ void Simulator::run(const QuantumCircuit& circuit)
                 state.applyCNOT(op.control, op.target);
                 break;
 
-            case OpType::MEASURE:
-                state.measure();
+
+            default:
                 break;
         }
+
+        state.applyBitFlipNoise(0.01);
     }
+
+    for (int i = 0; i < logicalQubits; i++)
+        state.correctBitFlip(i);
 }
 
 int Simulator::measure()
 {
     return state.measure();
+}
+
+int Simulator::measureAllLogical()
+{
+    return state.measureAllLogical(logicalQubits);
 }
