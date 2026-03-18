@@ -37,8 +37,8 @@ void Simulator::run(QuantumCircuit& circuit)
                 break;
         }
 
-        state.applyBitFlipNoise(0.01);
     }
+    // state.applyBitFlipNoise(0.001);
 
     for (int i = 0; i < logicalQubits; i++)
         state.correctBitFlip(i);

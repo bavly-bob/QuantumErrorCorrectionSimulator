@@ -37,6 +37,7 @@ QuantumErrorCorrectionSimulator/
 │
 ├── src/ # Source files
 ├── include/ # Header files
+├── test/ # GoogleTest unit tests
 ├── main.cpp # Entry point of the simulator
 └── README.md
 
@@ -55,3 +56,44 @@ The purpose of this project is to:
 - Add visualization of quantum states
 - Simulate larger qubit systems
 - Improve performance and scalability
+
+## Testing
+
+This project uses **GoogleTest (gtest)** to ensure correctness and high-quality testing practices across all quantum components.
+
+### Test Structure
+
+Tests are cleanly separated from production code and organized by subsystem. Doing so prevents mixing headers and ensures each isolated domain is independently verified:
+
+* `test_qubit.cpp`: Verifies isolated physical qubit behavior (normalization, deterministic metrics, probabilistic superposition).
+* `test_quantumGate.cpp`: Asserts individual gate matrices and correct amplitudes (Hadamard, Paulis).
+* `test_simulator.cpp`: Ensures accurate execution modeling, including logical outputs like Bell states and GHZ state correlation.
+* `test_circuit.cpp`: Checks proper operation decoding, logic-to-physical mapping, and layout sizes.
+* `test_noise.cpp`: Proves our phase/bit flip environment behaviors strictly respect bounded probability inputs.
+* `test_error_correction.cpp`: Ensures accurate identification of syndrome outcomes directly mapping to correct bit-flip mitigation.
+
+### How to Build Tests
+
+Configure your build and ensure a unified configuration includes the testing framework:
+```bash
+cmake -B build -S .
+cmake --build build --config Debug
+```
+*Note: The CMake automatically incorporates the GoogleTest library and exposes a discrete executable named `unit_tests` to prevent namespace conflicts.*
+
+### How to Run Tests
+
+It is easiest to verify them globally by using CMake's standard test runner, optionally in verbose mode to view detailed pass assertions:
+```bash
+cd build
+ctest -C Debug -V
+```
+
+Alternatively, invoke the test binary directly to filter specifically:
+```bash
+# Run all GoogleTest test suites explicitly
+build\Debug\unit_tests.exe
+
+# Filter to simulator subset tests
+build\Debug\unit_tests.exe --gtest_filter=SimulatorTest.*
+```

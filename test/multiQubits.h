@@ -133,3 +133,39 @@ bool test_two_qubits_single_hadamard()
         return false;
     return true;
 }
+
+// test 5 qubits
+void test_5_qubits()
+{
+    QuantumCircuit qc;
+    for(int i = 0; i < 5; ++i)
+        qc.h(i);
+    Simulator sim(5);
+    sim.run(qc);
+    int result = sim.measureAllLogical();
+    cout << "test_5_qubits: " << result << "\n";
+}
+
+// test 6 qubits
+void test_6_qubits()
+{
+    QuantumCircuit qc;
+    for(int i = 0; i < 6; ++i)
+        qc.h(i);
+    Simulator sim(6);
+    sim.run(qc);
+    int result = sim.measureAllLogical();
+    cout << "test_6_qubits: " << result << "\n";
+}
+
+// test 7 qubits
+void test_7_qubits()
+{
+    QuantumCircuit qc;
+    for(int i = 0; i < 7; ++i)
+        qc.h(i);
+    Simulator sim(7);
+    sim.run(qc);
+    int result = sim.measureAllLogical();
+    cout << "test_7_qubits: " << result << "\n";
+}
