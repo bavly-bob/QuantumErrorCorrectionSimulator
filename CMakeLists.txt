@@ -13,6 +13,7 @@ add_executable(${target}
     src/circuit.cpp
     src/simulator.cpp
     src/noise.cpp
+    src/correction.cpp
 )
 
 target_include_directories(${target} PRIVATE 
@@ -45,6 +46,7 @@ add_executable(unit_tests
     src/circuit.cpp
     src/simulator.cpp
     src/noise.cpp
+    src/correction.cpp
 )
 
 target_include_directories(unit_tests PRIVATE 

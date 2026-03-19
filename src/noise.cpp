@@ -1,25 +1,26 @@
 #include "quantumState.h"
 #include "quantumGate.h"
+#include "noise.h"
 #include <random>
 
-void QuantumState::applyBitFlipNoise(double prob) 
+void BitFlipNoise::apply(QuantumState& state)
 {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::bernoulli_distribution flip(prob);
+    std::bernoulli_distribution flip(p);
 
-    for (int q = 0; q < numQubits; q++)
+    for (int q = 0; q < state.getPhysicalQubits(); ++q)
         if (flip(gen))
-            applyGate(Gate::pauliX(), q); 
+            state.applyGate(Gate::pauliX(), q);
 }
 
-void QuantumState::applyPhaseFlipNoise(double prob) 
+void PhaseFlipNoise::apply(QuantumState& state)
 {
     static std::random_device rd;
     static std::mt19937 gen(rd());
-    std::bernoulli_distribution flip(prob);
+    std::bernoulli_distribution flip(p);
 
-    for (int q = 0; q < numQubits; q++)
+    for (int q = 0; q < state.getPhysicalQubits(); ++q)
         if (flip(gen))
-            applyGate(Gate::pauliZ(), q); 
+            state.applyGate(Gate::pauliZ(), q);
 }

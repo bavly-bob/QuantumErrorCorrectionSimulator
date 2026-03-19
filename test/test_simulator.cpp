@@ -13,7 +13,7 @@ TEST_F(SimulatorTest, SingleQubit_DoubleHadamard_ReturnsZero) {
         QuantumCircuit qc;
         qc.h(0);              
         qc.h(0);              
-        Simulator sim(1);
+        Simulator sim(1, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         EXPECT_EQ(result, 0);
@@ -26,7 +26,7 @@ TEST_F(SimulatorTest, SingleQubit_SingleHadamard_Probabilistic) {
     for(int i = 0; i < num_shots; ++i) {
         QuantumCircuit qc;
         qc.h(0);              
-        Simulator sim(1);
+        Simulator sim(1, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result == 0) count0++;
@@ -43,7 +43,7 @@ TEST_F(SimulatorTest, TwoQubits_BellState_CorrelatedMeasurements) {
         QuantumCircuit qc;
         qc.h(0);
         qc.cnot(0, 1);
-        Simulator sim(2);
+        Simulator sim(2, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         
@@ -60,7 +60,7 @@ TEST_F(SimulatorTest, ThreeQubits_GHZState_CorrelatedMeasurements) {
         qc.h(0);
         qc.cnot(0, 1);
         qc.cnot(0, 2);
-        Simulator sim(3);
+        Simulator sim(3, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         EXPECT_TRUE(result == 0 || result == 7) << "Result was: " << result;
@@ -72,7 +72,7 @@ TEST_F(SimulatorTest, MultiQubit_DoubleCNOT_ReturnsIdentity) {
         QuantumCircuit qc;
         qc.cnot(0, 1);
         qc.cnot(0, 1);
-        Simulator sim(2);
+        Simulator sim(2, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         EXPECT_EQ(result, 0);
@@ -82,7 +82,7 @@ TEST_F(SimulatorTest, MultiQubit_DoubleCNOT_ReturnsIdentity) {
 TEST_F(SimulatorTest, FiveQubits_HadamardSubposition_ValidState) {
     QuantumCircuit qc;
     for(int i = 0; i < 5; ++i) qc.h(i);
-    Simulator sim(5);
+    Simulator sim(5, 3);
     sim.run(qc);
     int result = sim.measureAllLogical();
     EXPECT_GE(result, 0);

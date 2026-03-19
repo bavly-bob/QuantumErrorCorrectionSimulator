@@ -16,7 +16,7 @@ bool test_two_qubits_bell_state()
         QuantumCircuit qc;
         qc.h(0);
         qc.cnot(0, 1);
-        Simulator sim(2);
+        Simulator sim(2, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result != 0 && result != 3)
@@ -41,7 +41,7 @@ bool test_three_qubits_GHZ_state()
         qc.h(0);
         qc.cnot(0, 1);
         qc.cnot(0, 2);
-        Simulator sim(3);
+        Simulator sim(3, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result != 0 && result != 7)
@@ -59,7 +59,7 @@ bool test_three_qubits_W_state()
         qc.h(0);
         qc.cnot(0, 1);
         qc.cnot(0, 2);
-        Simulator sim(3);
+        Simulator sim(3, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result != 0 && result != 7)
@@ -79,7 +79,7 @@ bool test_two_qubits_double_hadamard()
         qc.h(1);
         qc.h(0);
         qc.h(1);
-        Simulator q(2);
+        Simulator q(2, 3);
         q.run(qc);
         int result = q.measureAllLogical();
         if(result != 0)
@@ -96,7 +96,7 @@ bool test_two_qubits_double_cnot()
         QuantumCircuit qc;
         qc.cnot(0, 1);
         qc.cnot(0, 1);
-        Simulator sim(2);
+        Simulator sim(2, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result != 0)
@@ -115,7 +115,7 @@ bool test_two_qubits_single_hadamard()
     {
         QuantumCircuit qc;
         qc.h(0);
-        Simulator sim(2);
+        Simulator sim(2, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result == 0)
@@ -140,7 +140,7 @@ void test_5_qubits()
     QuantumCircuit qc;
     for(int i = 0; i < 5; ++i)
         qc.h(i);
-    Simulator sim(5);
+    Simulator sim(5, 3);
     sim.run(qc);
     int result = sim.measureAllLogical();
     cout << "test_5_qubits: " << result << "\n";
@@ -152,7 +152,7 @@ void test_6_qubits()
     QuantumCircuit qc;
     for(int i = 0; i < 6; ++i)
         qc.h(i);
-    Simulator sim(6);
+    Simulator sim(6, 3);
     sim.run(qc);
     int result = sim.measureAllLogical();
     cout << "test_6_qubits: " << result << "\n";
@@ -164,7 +164,7 @@ void test_7_qubits()
     QuantumCircuit qc;
     for(int i = 0; i < 7; ++i)
         qc.h(i);
-    Simulator sim(7);
+    Simulator sim(7, 3);
     sim.run(qc);
     int result = sim.measureAllLogical();
     cout << "test_7_qubits: " << result << "\n";

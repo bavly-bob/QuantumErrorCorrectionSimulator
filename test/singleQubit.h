@@ -15,7 +15,7 @@ bool test_single_qubit()
         QuantumCircuit qc;
         qc.h(0);              // H|0> = (|0> + |1>)/sqrt(2)
         qc.h(0);              // H((|0> + |1>)/sqrt(2)) = |0> should return to |0>
-        Simulator sim(1);
+        Simulator sim(1, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result != 0)
@@ -28,7 +28,7 @@ bool test_single_qubit()
     {
         QuantumCircuit qc;
         qc.h(0);              // H|0> = (|0> + |1>)/sqrt(2)
-        Simulator sim(1);
+        Simulator sim(1, 3);
         sim.run(qc);
         int result = sim.measureAllLogical();
         if(result == 0)

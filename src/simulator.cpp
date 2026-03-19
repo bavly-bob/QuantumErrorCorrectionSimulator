@@ -1,10 +1,11 @@
 #include "simulator.h"
+#include "correction.h"
 #include "quantumState.h"
 #include "quantumGate.h"
 #include "circuit.h"
 
-Simulator::Simulator(int qubits)
-    : logicalQubits(qubits) , state(qubits)
+Simulator::Simulator(int qubits, int repetitionCode)
+    : logicalQubits(qubits), repetitionCode(repetitionCode), state(qubits, repetitionCode)
 {
     for (int i = 0; i < qubits; i++)
         state.encode(i);
@@ -19,29 +20,19 @@ void Simulator::run(QuantumCircuit& circuit)
             case OpType::H:
                 state.applyGate(Gate::hadamard(), op.target);
                 break;
-
             case OpType::X:
                 state.applyGate(Gate::pauliX(), op.target);
                 break;
-
             case OpType::Z:
                 state.applyGate(Gate::pauliZ(), op.target);
                 break;
-
             case OpType::CNOT:
                 state.applyCNOT(op.control, op.target);
                 break;
-
-
             default:
                 break;
         }
-
     }
-    // state.applyBitFlipNoise(0.001);
-
-    for (int i = 0; i < logicalQubits; i++)
-        state.correctBitFlip(i);
 }
 
 int Simulator::measure()
@@ -51,5 +42,5 @@ int Simulator::measure()
 
 int Simulator::measureAllLogical()
 {
-    return state.measureAllLogical(logicalQubits);
+    return state.measureAllLogical();
 }

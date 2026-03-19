@@ -1,23 +1,34 @@
 #include <gtest/gtest.h>
-#include "quantumState.h"
+#include "noise.h"
 
-TEST(NoiseTest, BitFlipNoise_ApplyingWithProbabilityOne) {
-    QuantumState state(1); // 1 logical qubit means 3 physical qubits
-    state.applyBitFlipNoise(1.0); // Flips all physical qubits deterministically
-    int result = state.measureAllLogical(1);
-    EXPECT_EQ(result, 1);
+TEST(NoiseTest, BitFlipProbabilityZeroLeavesStateUnchanged)
+{
+    QuantumState state(1, 3);
+    BitFlipNoise noise(0.0);
+    noise.apply(state);
+    EXPECT_EQ(state.measureAllLogical(), 0);
 }
 
-TEST(NoiseTest, BitFlipNoise_ApplyingWithProbabilityZero) {
-    QuantumState state(1);
-    state.applyBitFlipNoise(0.0);
-    int result = state.measureAllLogical(1);
-    EXPECT_EQ(result, 0);
+TEST(NoiseTest, BitFlipProbabilityOneFlipsAllPhysicalQubits)
+{
+    QuantumState state(1, 3);
+    BitFlipNoise noise(1.0);
+    noise.apply(state);
+    EXPECT_EQ(state.measureAllLogical(), 1);
 }
 
-TEST(NoiseTest, PhaseFlipNoise_ApplyingWithProbabilityZero) {
-    QuantumState state(1);
-    state.applyPhaseFlipNoise(0.0);
-    int result = state.measureAllLogical(1);
-    EXPECT_EQ(result, 0);
+TEST(NoiseTest, PhaseFlipProbabilityZeroLeavesStateUnchanged)
+{
+    QuantumState state(1, 3);
+    PhaseFlipNoise noise(0.0);
+    noise.apply(state);
+    EXPECT_EQ(state.measureAllLogical(), 0);
+}
+
+TEST(NoiseTest, PhaseFlipProbabilityOneDoesNotChangeZBasisZeroState)
+{
+    QuantumState state(1, 3);
+    PhaseFlipNoise noise(1.0);
+    noise.apply(state);
+    EXPECT_EQ(state.measureAllLogical(), 0);
 }

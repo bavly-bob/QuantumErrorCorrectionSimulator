@@ -6,11 +6,12 @@
 class Simulator
 {
 public:
-    Simulator(int qubits);
+    Simulator(int qubits, int repetitionCode);
     void run(QuantumCircuit& circuit);
     int measure();
     int measureAllLogical();
 private:
     int logicalQubits;
+    int repetitionCode;
     QuantumState state;
 };
