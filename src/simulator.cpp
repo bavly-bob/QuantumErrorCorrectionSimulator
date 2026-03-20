@@ -6,10 +6,7 @@
 
 Simulator::Simulator(int qubits, int repetitionCode)
     : logicalQubits(qubits), repetitionCode(repetitionCode), state(qubits, repetitionCode)
-{
-    for (int i = 0; i < qubits; i++)
-        state.encode(i);
-}
+{}
 
 void Simulator::run(QuantumCircuit& circuit)
 {
@@ -18,17 +15,34 @@ void Simulator::run(QuantumCircuit& circuit)
         switch (op.type)
         {
             case OpType::H:
-                state.applyGate(Gate::hadamard(), op.target);
+            {
+                const int base = op.target * repetitionCode;
+                for (int i = 0; i < repetitionCode; ++i)
+                    state.applyGate(Gate::hadamard(), base + i);
                 break;
+            }
             case OpType::X:
-                state.applyGate(Gate::pauliX(), op.target);
+            {
+                const int base = op.target * repetitionCode;
+                for (int i = 0; i < repetitionCode; ++i)
+                    state.applyGate(Gate::pauliX(), base + i);
                 break;
+            }
             case OpType::Z:
-                state.applyGate(Gate::pauliZ(), op.target);
+            {
+                const int base = op.target * repetitionCode;
+                for (int i = 0; i < repetitionCode; ++i)
+                    state.applyGate(Gate::pauliZ(), base + i);
                 break;
+            }
             case OpType::CNOT:
-                state.applyCNOT(op.control, op.target);
+            {
+                const int controlBase = op.control * repetitionCode;
+                const int targetBase = op.target * repetitionCode;
+                for (int i = 0; i < repetitionCode; ++i)
+                    state.applyCNOT(controlBase + i, targetBase + i);
                 break;
+            }
             default:
                 break;
         }

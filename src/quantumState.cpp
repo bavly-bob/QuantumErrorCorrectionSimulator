@@ -8,7 +8,9 @@ using namespace std;
 QuantumState::QuantumState(int n, int repetitionCode)
 {
     logicalQubits = n;
-    this->repetitionCode = repetitionCode;
+    this->repetitionCode = (repetitionCode > 0) ? repetitionCode : 1;
+    physicalQubits = logicalQubits * this->repetitionCode;
+
     amplitudes.resize(1 << getPhysicalQubits());
     amplitudes[0] = 1.0;   // |000...0>
 }
@@ -210,4 +212,14 @@ void QuantumState::applyCNOT(int control, int target)
             std::swap(amplitudes[i], amplitudes[j]);
         }
     }
+}
+
+double QuantumState::fidelity(const QuantumState& other) const
+{
+    std::complex<double> inner = 0.0;
+
+    for (size_t i = 0; i < amplitudes.size(); i++)
+        inner += std::conj(amplitudes[i]) * other.amplitudes[i];
+
+    return std::norm(inner); // |<ψ|φ>|^2
 }

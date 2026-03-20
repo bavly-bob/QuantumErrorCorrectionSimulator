@@ -32,8 +32,7 @@ void BitFlipErrorCorrector::correct(QuantumState& state)
     {
         const int base = logicalQubit * repetitionCode;
         SyndromeProb probs = computeSyndromeProb(state, logicalQubit);
-        int syndrome = sampleSyndrome(probs);
-        collapseToSyndrome(state, logicalQubit, syndrome);
+        int syndrome = max_element(probs.probs.begin(), probs.probs.end()) - probs.probs.begin();
 
         int bestError = 0;
         int bestWeight = repetitionCode + 1;

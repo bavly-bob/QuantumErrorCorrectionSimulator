@@ -1,6 +1,5 @@
 #pragma once
 #include <vector>
-#include "quantumGate.h"
 
 enum class OpType
 {

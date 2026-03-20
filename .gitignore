@@ -3,6 +3,8 @@
 
 #build dir
 build/
+build-mingw/
+build-ninja/
 
 #unnessary files
 *.exe

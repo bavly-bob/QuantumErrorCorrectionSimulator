@@ -9,19 +9,18 @@ TEST(QuantumCircuitTest, AppendingOperations_AreStoredCorrectly) {
     qc.cnot(0, 1);
     
     auto ops = qc.getOperations();
-    ASSERT_EQ(ops.size(), 12); // Each logical op appends 3 physical ops
+    ASSERT_EQ(ops.size(), 4);
     
     EXPECT_EQ(ops[0].type, OpType::H);
     EXPECT_EQ(ops[0].target, 0);
     
-    EXPECT_EQ(ops[3].type, OpType::X);
-    EXPECT_EQ(ops[3].target, 3);
+    EXPECT_EQ(ops[1].type, OpType::X);
+    EXPECT_EQ(ops[1].target, 1);
 
-    EXPECT_EQ(ops[6].type, OpType::Z);
-    EXPECT_EQ(ops[6].target, 6);
+    EXPECT_EQ(ops[2].type, OpType::Z);
+    EXPECT_EQ(ops[2].target, 2);
 
-    EXPECT_EQ(ops[9].type, OpType::CNOT);
-    EXPECT_EQ(ops[9].control, 0); // controlBase
-    EXPECT_EQ(ops[9].target, 3);  // targetBase
+    EXPECT_EQ(ops[3].type, OpType::CNOT);
+    EXPECT_EQ(ops[3].control, 0);
+    EXPECT_EQ(ops[3].target, 1);
 }
-
